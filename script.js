@@ -9,6 +9,11 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+// Tapped Component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
 ///////////////
 const openModal = function (e) {
   e.preventDefault();
@@ -43,3 +48,21 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: "smooth" })
   }
 });
+
+tabContainer.addEventListener('click', function (e) {
+  /*
+  // it is correct becase it contains the span & the button itself 
+  if (e.target.closest(".operations__tab")) console.log("correct")
+
+  // it is wrong because it doesn't work when the span clicked
+  if (e.target.classList.contains("operations__tab")) console.log(Wrong)
+  */
+  const clicked = e.target.closest('.operations__tab');
+  if (!clicked) return; //Guard Clause
+
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  tabsContent.forEach(tc => tc.classList.remove('operations__content--active'));
+
+  clicked.classList.add('operations__tab--active');
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+})
