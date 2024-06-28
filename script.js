@@ -51,7 +51,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
-// Tapped Component
+///// Tapped Component
 tabContainer.addEventListener('click', function (e) {
   /*
   // it is correct becase it contains the span & the button itself 
@@ -70,7 +70,7 @@ tabContainer.addEventListener('click', function (e) {
   document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
 })
 
-// Menu Fade Animation
+///// Menu Fade Animation
 const handleHover = function (e) {
   if (e.target.classList.contains("nav__link")) {
     const link = e.target;
@@ -87,3 +87,18 @@ const handleHover = function (e) {
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 // mouseleave does not bubble. so we need mouseout
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+///// Sticky Navigation(the Intersection Observer API)
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+}
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
